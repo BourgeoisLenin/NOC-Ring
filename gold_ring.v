@@ -43,7 +43,8 @@ module gold_ring(
         node0_cwso,node0_cwro,node0_cwdo,
         node0_ccwso,node0_ccwro,node0_ccwdo,
         node0_peso,node0_pero,node0_pedo);
-
+        
+    
     //node1 signal
    wire node1_cwsi,node1_cwri;
     wire [63:0] node1_cwdi,node1_ccwdi,node1_cwdo,node1_ccwdo;
@@ -101,7 +102,7 @@ module gold_ring(
     //node0 to node1
     assign node1_cwsi = node0_cwso;
     assign node1_cwdi = node0_cwdo;
-    assign node1_ccwdo = node0_ccwri;
+    assign node1_ccwro = node0_ccwri;
     //node2 to node1
     assign node1_cwro = node2_cwri;
     assign node1_ccwsi = node2_ccwso;
