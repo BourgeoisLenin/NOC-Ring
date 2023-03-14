@@ -40,11 +40,11 @@ module router #(
     assign pe_dir = pe_input_buffer_data[62]; // 1 for ccw, 0 for cc
 
     assign cw_output_req_from_cw = cw_hop_continue && cw_input_req;
-    assign cw_output_req_from_pe = !cw_hop_continue && cw_input_req;
+    assign cw_output_req_from_pe = !cw_hop_continue && pe_input_req;
     assign ccw_output_req_from_ccw = ccw_hop_continue && ccw_input_req;
-    assign ccw_output_req_from_pe = !ccw_hop_continue && ccw_input_req;
-    assign pe_output_req_from_cw = !pe_dir && pe_input_req;
-    assign pe_output_req_from_ccw = pe_dir && pe_input_req;
+    assign ccw_output_req_from_pe = !ccw_hop_continue && pe_input_req;
+    assign pe_output_req_from_cw = !pe_dir && cw_input_req;
+    assign pe_output_req_from_ccw = pe_dir && ccw_input_req;
 
 
     router_input_ctrl cw_input_ctrl (clk,reset,polarity,cwsi,cwri,cwdi,cw_input_buffer_data,cw_input_req,cw_output_ack_to_cw||pe_output_ack_to_cw);
