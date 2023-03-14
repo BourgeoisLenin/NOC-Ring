@@ -120,10 +120,12 @@ module tb_gold_ring;
     reg [3:0] receive_complete;
 
     
-    integer data_arrived;
+    integer data_arrived, receive_start, gather_test_finished;
 
 
     initial begin
+        gather_test_finished = 0;
+        receive_start = 0;
         data_arrived = 0;
         clk = 0;
         reset = 1;
@@ -197,6 +199,7 @@ module tb_gold_ring;
                         nicEn_test[j] = 1;
                         nicWrEn_test[j] = 1;
                         send_complete[j] = 1;
+                        $fdisplay(fp,"i = %d, j = %d, data = %h.",i,j,d_in_test[j]);
                     end
                     else if(j!=i && send_complete[j]) begin
                         nicEn_test[j] = 1;
@@ -219,6 +222,8 @@ module tb_gold_ring;
 
     always @(posedge clk) begin
         if(&send_complete) begin
+            //node i receive
+            receive_start = 1;
             addr_test[i] = INPUT_STATUS;
             nicEn_test[i] = 1;
             nicWrEn_test[i] = 0;
@@ -230,7 +235,7 @@ module tb_gold_ring;
                 addr_test[i] = INPUT_STATUS;
                 data_arrived = 0;
                 #1
-                $fdisplay(fp,"receive count = %d, d_out = %h.",receive_complete,d_out_test[i]);
+                $fdisplay(fp,"i = %d, receive count = %d, d_out = %h.",i,receive_complete,d_out_test[i]);
                 receive_complete = receive_complete + 1;
             end
             else  
@@ -239,6 +244,11 @@ module tb_gold_ring;
             if(receive_complete == 3'd3) begin
                 //reset
                 if (i==3) begin
+                    check_complete =0;
+                    send_complete = 0;
+                    receive_complete =0;
+                    receive_start = 0;
+                    gather_test_finished = 1;
                     #4 
                     $fclose(fp);
                     $stop();
@@ -247,8 +257,25 @@ module tb_gold_ring;
                     check_complete =0;
                     send_complete = 0;
                     receive_complete =0;
-                    i = i+1;
+                    receive_start = 0;
+                    i = i + 1;
                 end
+        end
+    end
+
+    // check faulty receive in j nodes.
+    always @(posedge clk ) begin
+        if(receive_start) begin
+            //check node j for fault receive
+            for(j = 0; j < 4; j = j + 1) begin
+                if(j!=i) begin
+                    addr_test[j] = INPUT_STATUS;
+                    nicEn_test[j] = 1;
+                    nicWrEn_test[j] = 0;
+                    if(d_out_test[j] == 1)
+                        $fdisplay(fp, "ERROR, j = %d receive a packet. i = %d.", j,i);
+                end
+            end
         end
     end
 
@@ -258,9 +285,17 @@ module tb_gold_ring;
 
     always @(posedge clk ) begin
         if(clk_count > 1000) begin
-            $display("ERROR, ABORT. Over 1000 cycles");
+            if(!gather_test_finished) begin
+                $display("ERROR, gather test dead lock. ABORT. Over 1000 cycles");
+                $fclose(fp);
+                $stop(); 
+            end
+        end
+        if(gather_test_finished) begin
+            $display("Gather test finished. Check gold_ring.out for log.");
+            $fdisplay(fp,"Gather test finished.");
             $fclose(fp);
-            $stop();
+            $stop(); 
         end
     end
 
