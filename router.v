@@ -13,8 +13,8 @@ module router #(
 );
     input wire clk, reset, polarity, cwsi,ccwsi,pesi,cwro,ccwro,pero;
     input wire [63:0] cwdi,ccwdi,pedi;
-    output reg cwri,ccwri,peri,cwso,ccwso,peso;
-    output reg [63:0] cwdo,ccwdo,pedo;
+    output wire cwri,ccwri,peri,cwso,ccwso,peso;
+    output wire [63:0] cwdo,ccwdo,pedo;
     
     //cw_input_ctrl internal signal
     wire [63:0] cw_input_buffer_data;
