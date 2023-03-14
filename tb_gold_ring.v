@@ -5,7 +5,7 @@ module tb_gold_ring;
     parameter OUTPUT_BUFFER = 2'b10;
     parameter OUTPUT_STATUS = 2'b11;
 
-    reg [1:0] i,j;
+    integer i,j;
     integer fp, clk_count;
     reg clk, reset;
     wire [0:1] node0_addr,node1_addr,node2_addr,node3_addr;
@@ -119,7 +119,12 @@ module tb_gold_ring;
     reg [3:0] send_complete;
     reg [3:0] receive_complete;
 
+    
+    integer data_arrived;
+
+
     initial begin
+        data_arrived = 0;
         clk = 0;
         reset = 1;
         clk_count = 0;
@@ -128,6 +133,8 @@ module tb_gold_ring;
         check_complete = 0;
         send_complete = 0;
         receive_complete = 0;
+        nicEn_test = 0;
+        nicWrEn_test = 0;
         fp = $fopen("gold_ring.out");
 
         //send_start = 0;
@@ -143,8 +150,8 @@ module tb_gold_ring;
         if(reset&&clk_count==4) begin
             reset = 0;
         end
-        else begin
-            if(((|check_complete))) begin
+        else if(!reset)begin
+            if(!(&check_complete)) begin
                 $fdisplay(fp,"checking output status reg");
                 for(j = 0; j < 4; j=j+1) begin
                     if(j!=i) begin
@@ -154,34 +161,35 @@ module tb_gold_ring;
                         d_in_comb[32:63] = i;
                         d_in_comb[16:31] = j;
                         d_in_comb[2:7] = 0;
-                        if((j-1) == 1) begin
+                        if((j-1)%4 == i) begin
                             //ccw, dir = 1, hop = 1
-                            d_in_comb[1] = 1;
-                            d_in_comb[8:15] = 1;
+                            d_in_comb[1] = 1'b1;
+                            d_in_comb[8:15] = 8'd1;
                         end
-                        else if((j+2)==i)begin
+                        else if((j+2)%4==i)begin
                             //ccw dir = 0 hop = 2
-                            d_in_comb[1] = 0;
-                            d_in_comb[8:15] = 2;
+                            d_in_comb[1] = 1'b0;
+                            d_in_comb[8:15] = 8'b 00000011;
                         end
-                        else if((j+1)==i) begin
+                        else if((j+1)%4==i) begin
                             //cw dir 0 hop 1
-                            d_in_comb[1] = 0;
-                            d_in_comb[8:15] = 1;
+                            d_in_comb[1] = 1'b0;
+                            d_in_comb[8:15] = 8'd1;
                         end
-                        if(j ==0 || j == 1)
-                            d_in_comb[0] = 0;
+                        if(j == 0 || j == 1)
+                            d_in_comb[0] = 1'b0;
                         else
-                            d_in_comb[0] = 1;
+                            d_in_comb[0] = 1'b1;
                         d_in_test[j] = d_in_comb;
-                        check_complete[j] = 1;
+                        check_complete[j] = 1'b1;
                     end
                     else begin
-                        check_complete[i] = 1; 
+                        check_complete[i] = 1'b1; 
                     end
+                    
                 end
             end 
-            /*else if (&check_complete && !(&send_complete)) begin
+            else if (&check_complete && !(&send_complete)) begin
                 $fdisplay(fp,"writing to output buffer");
                 for(j = 0; j < 4; j=j+1) begin
                     if(j!=i && d_out_test[j]==0 && !send_complete[j]) begin
@@ -201,12 +209,12 @@ module tb_gold_ring;
             else if(&send_complete && !(&receive_complete)) begin
                 nicWrEn_test = 0;
             end
-            */
+            
 
             //i=i+1;
         end
         clk_count = clk_count + 1;
-        j=0;
+        //j=0;
     end
 
     always @(posedge clk) begin
@@ -214,12 +222,22 @@ module tb_gold_ring;
             addr_test[i] = INPUT_STATUS;
             nicEn_test[i] = 1;
             nicWrEn_test[i] = 0;
-            if(d_out_test[i] == 1) begin
+            if(d_out_test[i] == 1 && !data_arrived) begin
+                data_arrived = 1;
+                addr_test[i] = INPUT_BUFFER;
+            end
+            else if(data_arrived) begin
+                addr_test[i] = INPUT_STATUS;
+                data_arrived = 0;
+                #1
                 $fdisplay(fp,"receive count = %d, d_out = %h.",receive_complete,d_out_test[i]);
                 receive_complete = receive_complete + 1;
             end
+            else  
+                data_arrived = 0;
         end
-        if(receive_complete == 3'd3) begin
+            if(receive_complete == 3'd3) begin
+                //reset
             #4 
             $fclose(fp);
             $stop();
