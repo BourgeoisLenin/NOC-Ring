@@ -238,9 +238,17 @@ module tb_gold_ring;
         end
             if(receive_complete == 3'd3) begin
                 //reset
-            #4 
-            $fclose(fp);
-            $stop();
+                if (i==3) begin
+                    #4 
+                    $fclose(fp);
+                    $stop();
+                end
+                else begin
+                    check_complete =0;
+                    send_complete = 0;
+                    receive_complete =0;
+                    i = i+1;
+                end
         end
     end
 
