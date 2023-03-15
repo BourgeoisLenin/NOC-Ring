@@ -6,7 +6,7 @@ module tb_gold_ring;
     parameter OUTPUT_STATUS = 2'b11;
 
     integer i,j;
-    integer fp, clk_count;
+    integer fp,fp1, clk_count;
     reg clk, reset;
     wire [0:1] node0_addr,node1_addr,node2_addr,node3_addr;
     wire [0:63] node0_d_in,node1_d_in,node2_d_in,node3_d_in;
@@ -138,6 +138,7 @@ module tb_gold_ring;
         nicEn_test = 0;
         nicWrEn_test = 0;
         fp = $fopen("gold_ring.out");
+        fp1 = $fopen("start_end_time.out");
 
         //send_start = 0;
         //node0_d_in[32:63] = i;
@@ -154,6 +155,7 @@ module tb_gold_ring;
         end
         else if(!reset)begin
             if(!(&check_complete)) begin
+                $fdisplay(fp1,"Time = %t. start time of %d and end time of %d.",$time,i,i-1);
                 $fdisplay(fp,"checking output status reg");
                 for(j = 0; j < 4; j=j+1) begin
                     if(j!=i) begin
@@ -200,6 +202,7 @@ module tb_gold_ring;
                         nicWrEn_test[j] = 1;
                         send_complete[j] = 1;
                         $fdisplay(fp,"i = %d, j = %d, data = %h.",i,j,d_in_test[j]);
+                        $fdisplay(fp,"Phase = %d,time = %t,Destination = %d,Source = %d, packet Value = %h",i,$time,i,j,d_in_test[j]);
                     end
                     else if(j!=i && send_complete[j]) begin
                         nicEn_test[j] = 1;
