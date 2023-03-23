@@ -10,7 +10,7 @@ module ID (
     ID_wrEn,ID_memEn,ID_memwrEn,
     ID_br_ctrl,
     ID_forward_rA, ID_forawrd_rB,
-    ID_br_pc
+    ID_br_pc,ID_op_code
 );
     input wire clk,reset;
     input wire [0:31] ID_inst, ID_pc;
@@ -29,6 +29,7 @@ module ID (
     output wire ID_br_ctrl;
     output wire ID_forward_rA, ID_forawrd_rB;
     output wire [0:15] ID_br_pc;
+    output wire [0:5] ID_op_code;
 
     wire ID_decode_ctrl_bez,ID_decode_ctrl_bnez;
     wire ID_R_type;
@@ -38,7 +39,7 @@ module ID (
 
     decode_ctrl decode_ctrl(ID_inst,
     ID_wrEn,ID_rD,ID_rA,ID_rB,ID_WW, ID_ppp,
-    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,ID_R_type,ID_br_pc);
+    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,ID_R_type,ID_br_pc,ID_op_code);
 
     //connect M_type_rD_data to ID_rB_data - done
     br_ctrl br_ctrl(ID_decode_ctrl_bez,ID_decode_ctrl_bnez, ID_rB_data,ID_br_ctrl);
