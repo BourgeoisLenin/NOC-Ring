@@ -1,7 +1,8 @@
 module ID (
     clk,reset,
     ID_inst,ID_pc,
-    WB_rD,WB_wrEn,WB_rD_data,
+    EX_MEM_rD,EX_MEM_wrEn,
+    WB_rD,WB_wrEn,WB_ppp,WB_rD_data,
     ID_rA_data,ID_rB_data,
     ID_rD,ID_rA,ID_rB,
     ID_WW,
