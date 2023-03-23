@@ -1,6 +1,6 @@
 module ID (
     clk,reset,
-    ID_inst,ID_pc,
+    ID_inst,
     EX_MEM_rD,EX_MEM_wrEn,
     WB_rD,WB_wrEn,WB_ppp,WB_rD_data,
     ID_rA_data,ID_rB_data,
@@ -13,7 +13,7 @@ module ID (
     ID_br_pc,ID_op_code
 );
     input wire clk,reset;
-    input wire [0:31] ID_inst, ID_pc;
+    input wire [0:31] ID_inst;
     input wire [0:4] WB_rD;
     input wire WB_wrEn;
     input wire [0:2] WB_ppp;
