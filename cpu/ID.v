@@ -10,7 +10,7 @@ module ID (
     ID_wrEn,ID_memEn,ID_memwrEn,
     ID_br_ctrl,
     ID_forward_rA, ID_forawrd_rB,
-    ID_br_pc,ID_op_code
+    ID_imm_addr,ID_op_code
 );
     input wire clk,reset;
     input wire [0:31] ID_inst;
@@ -26,9 +26,9 @@ module ID (
     output wire [0:1] ID_WW;
     output wire [0:2] ID_ppp;
     output wire ID_wrEn,ID_memEn,ID_memwrEn;
-    output wire ID_br_ctrl;
+    output wire ID_br_ctrl; // this is IF_flush and pc select in IF
     output wire ID_forward_rA, ID_forawrd_rB;
-    output wire [0:15] ID_br_pc;
+    output wire [0:15] ID_imm_addr; // this goes to IF
     output wire [0:5] ID_op_code;
 
     wire ID_decode_ctrl_bez,ID_decode_ctrl_bnez;
@@ -39,7 +39,7 @@ module ID (
 
     decode_ctrl decode_ctrl(ID_inst,
     ID_wrEn,ID_rD,ID_rA,ID_rB,ID_WW, ID_ppp,
-    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,ID_R_type,ID_br_pc,ID_op_code);
+    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,ID_R_type,ID_imm_addr,ID_op_code);
 
     //connect M_type_rD_data to ID_rB_data - done
     br_ctrl br_ctrl(ID_decode_ctrl_bez,ID_decode_ctrl_bnez, ID_rB_data,ID_br_ctrl);
