@@ -65,6 +65,7 @@ module decode_ctrl (
                     ID_memwrEn = 0;
                     ID_decode_ctrl_bez = 0;
                     ID_decode_ctrl_bnez = 0;
+                    ID_R_type = 1;
                 end
                 else begin
                     ID_wrEn = 0;
