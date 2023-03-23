@@ -10,7 +10,7 @@ module RF (
     output wire [0:63] d_out1,d_out2;
 
     reg [0:63] register_file [31:0];
-    reg [0:4] i;
+    reg [0:5] i;
 
     assign d_out1 = wrEn&&(rD==rA)?d_in:register_file[rA];
     assign d_out2 = wrEn&&(rD==rB)?d_in:register_file[rB];
