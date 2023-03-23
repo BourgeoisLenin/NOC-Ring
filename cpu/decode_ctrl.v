@@ -1,11 +1,12 @@
 module decode_ctrl (
     inst,
-    ID_wrEn,ID_rD,ID_rA,ID_rB,ID_WW,
+    ID_wrEn,ID_rD,ID_rA,ID_rB,ID_WW, ID_ppp
     ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez
 );
     input wire[0:31] inst;
     output wire [0:4] ID_rD,ID_rA,ID_rB;
     output wire [0:1] ID_WW;
+    output wire [0:2] ID_ppp;
     output reg ID_wrEn,ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez;
 
     parameter RTYPE = 6'b101010;
@@ -37,6 +38,7 @@ module decode_ctrl (
     assign ID_rB = inst[16:20];
     assign ppp = inst[21:23];
     assign ID_WW = inst[24:25];
+    assign ID_ppp = inst[21:23];
     //MTYPE
     assign imm_addr = inst[16:31];
 
