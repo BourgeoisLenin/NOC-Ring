@@ -1,7 +1,7 @@
 module decode_ctrl (
     inst,
     ID_wrEn,ID_rD,ID_rA,ID_rB,ID_WW, ID_ppp,
-    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,ID_R_type,
+    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,rD_as_source,
     imm_addr,op_code
 );
     input wire[0:31] inst;
@@ -9,7 +9,7 @@ module decode_ctrl (
     output wire [0:1] ID_WW;
     output wire [0:2] ID_ppp;
     output reg ID_wrEn,ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez;
-    output reg ID_R_type;
+    output reg rD_as_source;
     output wire [0:15] imm_addr;
     output wire [0:5] op_code;
 
@@ -49,7 +49,7 @@ module decode_ctrl (
         ID_memwrEn = 0;
         ID_decode_ctrl_bez = 0;
         ID_decode_ctrl_bnez = 0;
-        ID_R_type = 0;
+        rD_as_source = 0;
         case (type_identifier)
             RTYPE: begin
                 if(((op_code == 6'b 000100 )||
@@ -58,30 +58,39 @@ module decode_ctrl (
                 (op_code == 6'b 010000)||
                 (op_code == 6'b 010001)||
                 (op_code == 6'b 010010))
-                &&(ID_rB == 5'b 00000))
+                &&(ID_rB != 5'b 00000))
                 begin
-                    ID_wrEn = 1;
-                    ID_memEn = 0;
-                    ID_memwrEn = 0;
-                    ID_decode_ctrl_bez = 0;
-                    ID_decode_ctrl_bnez = 0;
-                    ID_R_type = 1;
-                end
-                else begin
                     ID_wrEn = 0;
                     ID_memEn = 0;
                     ID_memwrEn = 0;
                     ID_decode_ctrl_bez = 0;
                     ID_decode_ctrl_bnez = 0;
+                    rD_as_source = 0;
+                end
+                else begin
+                    ID_wrEn = 1;
+                    ID_memEn = 0;
+                    ID_memwrEn = 0;
+                    ID_decode_ctrl_bez = 0;
+                    ID_decode_ctrl_bnez = 0;
+                    rD_as_source = 1;
                 end
             end 
+            VLD: begin
+                ID_wrEn = 0;
+                ID_memEn = (!(|ID_rA));
+                ID_memwrEn = 0;
+                ID_decode_ctrl_bez = 0;
+                ID_decode_ctrl_bnez = 0;
+                rD_as_source = 0;
+            end
             VSD: begin
                 ID_wrEn = 0;
                 ID_memEn = (!(|ID_rA));
                 ID_memwrEn = (!(|ID_rA));
                 ID_decode_ctrl_bez = 0;
                 ID_decode_ctrl_bnez = 0;
-                ID_R_type = 0;
+                rD_as_source = 0;
             end 
             VBEZ: begin
                 ID_wrEn = 0;
@@ -89,7 +98,7 @@ module decode_ctrl (
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = (!(|ID_rA));
                 ID_decode_ctrl_bnez = 0;
-                ID_R_type = 0;
+                rD_as_source = 0;
             end
             VBNEZ: begin
                 ID_wrEn = 0;
@@ -97,7 +106,7 @@ module decode_ctrl (
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = 0;
                 ID_decode_ctrl_bnez = (!(|ID_rA));
-                ID_R_type = 0;
+                rD_as_source = 0;
             end 
             VNOP: begin
                 ID_wrEn = 0;
@@ -105,7 +114,7 @@ module decode_ctrl (
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = 0;
                 ID_decode_ctrl_bnez = 0;
-                ID_R_type = 0;
+                rD_as_source = 0;
             end
             default: begin
                 ID_wrEn = 0;
@@ -113,7 +122,7 @@ module decode_ctrl (
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = 0;
                 ID_decode_ctrl_bnez = 0;
-                ID_R_type = 0;
+                rD_as_source = 0;
             end
         endcase
     end

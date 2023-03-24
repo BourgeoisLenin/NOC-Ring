@@ -9,7 +9,7 @@ module ID (
     ID_ppp,
     ID_wrEn,ID_memEn,ID_memwrEn,
     ID_br_ctrl,
-    ID_forward_rA, ID_forawrd_rB,
+    ID_forward_rA,ID_forawrd_rB,
     ID_imm_addr,ID_op_code
 );
     input wire clk,reset;
@@ -32,14 +32,14 @@ module ID (
     output wire [0:5] ID_op_code;
 
     wire ID_decode_ctrl_bez,ID_decode_ctrl_bnez;
-    wire ID_R_type;
+    wire rD_as_source;
     wire [0:4] rf_in2;
 
-    assign rB_or_rD = ID_R_type? ID_rB: ID_rD;
+    assign rB_or_rD = rD_as_source? ID_rB: ID_rD;
 
     decode_ctrl decode_ctrl(ID_inst,
     ID_wrEn,ID_rD,ID_rA,ID_rB,ID_WW, ID_ppp,
-    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,ID_R_type,ID_imm_addr,ID_op_code);
+    ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,rD_as_source,ID_imm_addr,ID_op_code);
 
     //connect M_type_rD_data to ID_rB_data - done
     br_ctrl br_ctrl(ID_decode_ctrl_bez,ID_decode_ctrl_bnez, ID_rB_data,ID_br_ctrl);
