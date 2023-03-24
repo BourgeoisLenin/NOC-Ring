@@ -33,7 +33,7 @@ module EXMEM (
 
     assign EXMEM_mem_data_in = EXMEM_forwarded_rB_data;
 
-    ALU alu(EXMEM_forwarded_rA_data,EXMEM_forwarded_rB_data,EXMEM_ALU_out,{EXMEM_WW,EXMEM_op_code});
+    ALU alu(EXMEM_forwarded_rA_data,EXMEM_forwarded_rB_data,EXMEM_ALU_out,EXMEM_WW,EXMEM_op_code);
 
     
     always @(posedge clk) begin
@@ -53,6 +53,7 @@ module EXMEM (
             end
             else if(WB_ppp==3'b001) begin
                 EXMEM_forwarded_rA_data [0:31] = WB_data[0:31];
+
             end
             else if(WB_ppp==3'b010) begin
                 EXMEM_forwarded_rA_data [32:63] = WB_data[32:63];
@@ -102,7 +103,6 @@ module EXMEM (
 
     //memory load wrapper/stall
     always @(*) begin
-        EXMEM_rD_data_select = 0;
         if(EXMEM_memEn&&EXMEM_wrEn&& (!EXMEM_memwrEn)) begin //load
             EXMEM_rD_data_select = 1;
             if(!counter) begin
@@ -114,6 +114,8 @@ module EXMEM (
                 next_counter = ~counter;
             end
         end
+        else 
+            EXMEM_rD_data_select = 0;
         /*
         else if (EXMEM_memEn&& (!EXMEM_wrEn) && EXMEM_memwrEn) begin //store
             

@@ -1,4 +1,4 @@
-module ALU  (rA_data,rB_data,rD_data,control_signal);
+module ALU  (rA_data,rB_data,rD_data,WW,ALU_opr);
 
     parameter And                  = 6'b 000001,
               Or                   = 6'b 000010,
@@ -26,14 +26,10 @@ module ALU  (rA_data,rB_data,rD_data,control_signal);
 
 
     input wire[0:63] rA_data,rB_data;
-    input wire[0:7] control_signal;
     output reg [0:63] rD_data;
 
-    wire [0:1] WW;
-    wire [0:5] ALU_opr;
-
-    assign WW  = control_signal[0:1];
-    assign ALU_opr = control_signal[2:7];
+    input wire [0:1] WW;
+    input wire [0:5] ALU_opr;
 
     always @(*) begin
         rD_data = 0;
