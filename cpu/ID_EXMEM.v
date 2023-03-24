@@ -5,13 +5,13 @@ module ID_EXMEM (
     //ID_rA,ID_rB,
     ID_ppp,ID_WW,ID_op_code,
     ID_wrEn,ID_memEn,ID_memwrEn,
-    ID_forward_rA, ID_forawrd_rB,
+    ID_forward_rA, ID_forward_rB,
     ID_imm_addr,
     stall,
     EXMEM_rA_data, EXMEM_rB_data,
     EXMEM_rD,EXMEM_ppp,EXMEM_WW,EXMEM_op_code,
     EXMEM_wrEn,EXMEM_memEn,EXMEM_memwrEn,
-    EXMEM_forward_rA, EXMEM_forawrd_rB,
+    EXMEM_forward_rA, EXMEM_forward_rB,
     EXMEM_imm_addr
 );
     input wire clk,reset;
@@ -21,7 +21,7 @@ module ID_EXMEM (
     input wire [0:1] ID_WW;
     input wire [0:5] ID_op_code;
     input wire ID_wrEn,ID_memEn,ID_memwrEn;
-    input wire ID_forward_rA, ID_forawrd_rB;
+    input wire ID_forward_rA, ID_forward_rB;
     input wire [0:15] ID_imm_addr;
     input wire stall;
 
@@ -32,7 +32,7 @@ module ID_EXMEM (
     output reg [0:1] EXMEM_WW;
     output reg [0:5] EXMEM_op_code;
     output reg EXMEM_wrEn,EXMEM_memEn,EXMEM_memwrEn;
-    output reg EXMEM_forward_rA, EXMEM_forawrd_rB;
+    output reg EXMEM_forward_rA, EXMEM_forward_rB;
     output reg [0:15] EXMEM_imm_addr;
 
     always @(posedge clk) begin
@@ -49,7 +49,7 @@ module ID_EXMEM (
             EXMEM_memEn <= 0;
             EXMEM_memwrEn <= 0;
             EXMEM_forward_rA <= 0;
-            EXMEM_forawrd_rB <= 0;
+            ID_forward_rB <= 0;
             EXMEM_imm_addr <= 0;
         end
         else if(!stall) begin
@@ -65,7 +65,7 @@ module ID_EXMEM (
             EXMEM_memEn <= ID_memEn;
             EXMEM_memwrEn <= ID_memwrEn;
             EXMEM_forward_rA <= ID_forward_rA;
-            EXMEM_forawrd_rB <= ID_forawrd_rB;
+            EXMEM_forward_rB <= ID_forward_rB;
             EXMEM_imm_addr <= ID_imm_addr;
         end
     end
