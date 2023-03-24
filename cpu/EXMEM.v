@@ -28,15 +28,15 @@ module EXMEM (
 
     reg [0:63] EXMEM_forwarded_rA_data,EXMEM_forwarded_rB_data;
 
-    reg [0:1] counter;
-    reg [0:1] next_counter;
+    reg counter;
+    reg next_counter;
 
     assign EXMEM_mem_data_in = EXMEM_forwarded_rB_data;
 
     ALU alu(EXMEM_forwarded_rA_data,EXMEM_forwarded_rB_data,EXMEM_ALU_out,{EXMEM_WW,EXMEM_op_code});
 
     
-    always @(posedge clk ) begin
+    always @(posedge clk) begin
         if(reset)
             counter <= 0;
         else
@@ -105,13 +105,13 @@ module EXMEM (
         EXMEM_rD_data_select = 0;
         if(EXMEM_memEn&&EXMEM_wrEn&& (!EXMEM_memwrEn)) begin //load
             EXMEM_rD_data_select = 1;
-            if(counter == 0) begin
+            if(!counter) begin
                 EXMEM_stall = 1;
-                next_counter = counter + 1;
+                next_counter = ~counter;
             end
-            else if(counter == 2'b10) begin
+            else if(counter) begin
                 EXMEM_stall = 0;
-                next_counter = 0;
+                next_counter = ~counter;
             end
         end
         /*
