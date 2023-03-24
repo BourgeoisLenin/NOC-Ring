@@ -77,7 +77,7 @@ module decode_ctrl (
                 end
             end 
             VLD: begin
-                ID_wrEn = 0;
+                ID_wrEn = 1;
                 ID_memEn = (!(|ID_rA));
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = 0;
