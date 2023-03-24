@@ -9,7 +9,7 @@ module ID (
     ID_ppp,
     ID_wrEn,ID_memEn,ID_memwrEn,
     ID_br_ctrl,
-    ID_forward_rA,ID_forawrd_rB,
+    ID_forward_rA,ID_forward_rB,
     ID_imm_addr,ID_op_code
 );
     input wire clk,reset;

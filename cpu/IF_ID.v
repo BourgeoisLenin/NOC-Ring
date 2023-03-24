@@ -1,7 +1,7 @@
 module IF_ID (
-    clk,reset,ID_flush,IF_inst,IF_pc,ID_inst,ID_pc,stall
+    clk,reset,flush,IF_inst,IF_pc,ID_inst,ID_pc,stall
 );
-    input wire clk,reset,ID_flush;
+    input wire clk,reset,flush;
     input wire [0:31] IF_inst;
     input wire [0:31] IF_pc;
     input wire stall;
@@ -13,7 +13,7 @@ module IF_ID (
             ID_inst <= 0;
             ID_pc <= 0;
         end
-        else if(ID_flush) begin
+        else if(flush) begin
             ID_inst <= 32'h F0000000;
             ID_pc <= 0;
         end
