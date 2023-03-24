@@ -27,13 +27,13 @@ module ID (
     output wire [0:2] ID_ppp;
     output wire ID_wrEn,ID_memEn,ID_memwrEn;
     output wire ID_br_ctrl; // this is IF_flush and pc select in IF
-    output wire ID_forward_rA, ID_forawrd_rB;
+    output wire ID_forward_rA, ID_forward_rB;
     output wire [0:15] ID_imm_addr; // this goes to IF
     output wire [0:5] ID_op_code;
 
     wire ID_decode_ctrl_bez,ID_decode_ctrl_bnez;
     wire rD_as_source;
-    wire [0:4] rf_in2;
+    wire [0:4] rB_or_rD;
 
     assign rB_or_rD = rD_as_source? ID_rD: ID_rB;
 
@@ -46,7 +46,7 @@ module ID (
 
     RF reg_file(clk,reset,WB_wrEn,ID_rA,rB_or_rD,WB_rD,WB_ppp,WB_rD_data,ID_rA_data,ID_rB_data);
 
-    forwarding_unit forward_ctrl(ID_rA, rB_or_rD, EX_MEM_rD, EX_MEM_wrEn, ID_forward_rA, ID_forawrd_rB);
+    forwarding_unit forward_ctrl(ID_rA, rB_or_rD, EX_MEM_rD, EX_MEM_wrEn, ID_forward_rA, ID_forward_rB);
 
     //branch and hdu
 
