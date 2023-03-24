@@ -35,7 +35,7 @@ module ID (
     wire rD_as_source;
     wire [0:4] rf_in2;
 
-    assign rB_or_rD = rD_as_source? ID_rB: ID_rD;
+    assign rB_or_rD = rD_as_source? ID_rD: ID_rB;
 
     decode_ctrl decode_ctrl(ID_inst,
     ID_wrEn,ID_rD,ID_rA,ID_rB,ID_WW, ID_ppp,

@@ -73,7 +73,7 @@ module decode_ctrl (
                     ID_memwrEn = 0;
                     ID_decode_ctrl_bez = 0;
                     ID_decode_ctrl_bnez = 0;
-                    rD_as_source = 1;
+                    rD_as_source = 0;
                 end
             end 
             VLD: begin
@@ -82,7 +82,7 @@ module decode_ctrl (
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = 0;
                 ID_decode_ctrl_bnez = 0;
-                rD_as_source = 0;
+                rD_as_source = 1;
             end
             VSD: begin
                 ID_wrEn = 0;
@@ -90,7 +90,7 @@ module decode_ctrl (
                 ID_memwrEn = (!(|ID_rA));
                 ID_decode_ctrl_bez = 0;
                 ID_decode_ctrl_bnez = 0;
-                rD_as_source = 0;
+                rD_as_source = 1;
             end 
             VBEZ: begin
                 ID_wrEn = 0;
@@ -98,7 +98,7 @@ module decode_ctrl (
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = (!(|ID_rA));
                 ID_decode_ctrl_bnez = 0;
-                rD_as_source = 0;
+                rD_as_source = 1;
             end
             VBNEZ: begin
                 ID_wrEn = 0;
@@ -106,7 +106,7 @@ module decode_ctrl (
                 ID_memwrEn = 0;
                 ID_decode_ctrl_bez = 0;
                 ID_decode_ctrl_bnez = (!(|ID_rA));
-                rD_as_source = 0;
+                rD_as_source = 1;
             end 
             VNOP: begin
                 ID_wrEn = 0;
