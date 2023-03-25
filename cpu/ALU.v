@@ -1,4 +1,4 @@
-module ALU  (rA_data,rB_data,rD_data,WW,ALU_opr);
+module ALU (rA_data,rB_data,rD_data,WW,ALU_opr);
 
     parameter And                  = 6'b 000001,
               Or                   = 6'b 000010,

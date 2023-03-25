@@ -1,10 +1,11 @@
 module ID (
     clk,reset,
     ID_inst,
-    EX_MEM_rD,EX_MEM_wrEn,
+    EXMEM_rD,EXMEM_wrEn,
     WB_rD,WB_wrEn,WB_ppp,WB_rD_data,
     ID_rA_data,ID_rB_data,
-    ID_rD,ID_rA,ID_rB,
+    ID_rD,
+    ID_rA,ID_rB,
     ID_WW,
     ID_ppp,
     ID_wrEn,ID_memEn,ID_memwrEn,
@@ -18,8 +19,8 @@ module ID (
     input wire WB_wrEn;
     input wire [0:2] WB_ppp;
     input wire [0:63] WB_rD_data;
-    input wire [0:4] EX_MEM_rD;
-    input wire EX_MEM_wrEn;
+    input wire [0:4] EXMEM_rD;
+    input wire EXMEM_wrEn;
 
     output wire [0:63] ID_rA_data, ID_rB_data;
     output wire [0:4] ID_rD,ID_rA,ID_rB; //may not need ra rb to be output
@@ -46,7 +47,7 @@ module ID (
 
     RF reg_file(clk,reset,WB_wrEn,ID_rA,rB_or_rD,WB_rD,WB_ppp,WB_rD_data,ID_rA_data,ID_rB_data);
 
-    forwarding_unit forward_ctrl(ID_rA, rB_or_rD, EX_MEM_rD, EX_MEM_wrEn, ID_forward_rA, ID_forward_rB);
+    forwarding_unit forward_ctrl(ID_rA, rB_or_rD, EXMEM_rD, EXMEM_wrEn, ID_forward_rA, ID_forward_rB);
 
     //branch and hdu
 

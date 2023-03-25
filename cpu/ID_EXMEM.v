@@ -49,7 +49,7 @@ module ID_EXMEM (
             EXMEM_memEn <= 0;
             EXMEM_memwrEn <= 0;
             EXMEM_forward_rA <= 0;
-            ID_forward_rB <= 0;
+            EXMEM_forward_rB <= 0;
             EXMEM_imm_addr <= 0;
         end
         else if(!stall) begin

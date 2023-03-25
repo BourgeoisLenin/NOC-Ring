@@ -189,15 +189,15 @@ end
 	
 initial
 begin
-	$readmemh("cmp_test.imem.0.fill", IM_node0.MEM); 	// loading instruction memory into node0
-	$readmemh("cmp_test.imem.1.fill", IM_node1.MEM); 	// loading instruction memory into node1
-	$readmemh("cmp_test.imem.2.fill", IM_node2.MEM); 	// loading instruction memory into node2
-	$readmemh("cmp_test.imem.3.fill", IM_node3.MEM); 	// loading instruction memory into node3
+	//$readmemh("cmp_test.imem.0.fill", IM_node0.MEM); 	// loading instruction memory into node0
+	$readmemh("imem_1.fill", IM_node1.MEM); 	// loading instruction memory into node1
+	//$readmemh("cmp_test.imem.2.fill", IM_node2.MEM); 	// loading instruction memory into node2
+	//$readmemh("cmp_test.imem.3.fill", IM_node3.MEM); 	// loading instruction memory into node3
 
-	$readmemh("cmp_test.dmem.0.fill", DM_node0.MEM); 	// loading data memory into node0
-	$readmemh("cmp_test.dmem.1.fill", DM_node1.MEM); 	// loading data memory into node1
-	$readmemh("cmp_test.dmem.2.fill", DM_node2.MEM); 	// loading data memory into node2
-	$readmemh("cmp_test.dmem.3.fill", DM_node3.MEM); 	// loading data memory into node3
+	$readmemh("dmem.fill", DM_node0.MEM); 	// loading data memory into node0
+	//$readmemh("cmp_test.dmem.1.fill", DM_node1.MEM); 	// loading data memory into node1
+	//$readmemh("cmp_test.dmem.2.fill", DM_node2.MEM); 	// loading data memory into node2
+	//$readmemh("cmp_test.dmem.3.fill", DM_node3.MEM); 	// loading data memory into node3
 
 	// $readmemh("cmp_test.nic.0.fill", CMP.NIC_NODE0.MEM);	// loading dummy nic 0 memory
 	// $readmemh("cmp_test.nic.1.fill", CMP.NIC_NODE1.MEM);	// loading dummy nic 1 memory
