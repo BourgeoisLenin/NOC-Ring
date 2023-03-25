@@ -31,73 +31,47 @@
 83C0001E  // VLD r30, 30 ;
 83E0001F  // VLD r31, 31 ;
 a9e218c6    //rD=  15,rA= 2,rB= 3,ppp = 000,ww = 11,opcode = 000110,ADD
-85E00023  // VSD r15,35 ;
 aa170341    //rD= 16,rA=23,rB= 0,ppp = 011,ww = 01,opcode = 000001,AND
-86000024  // VSD r16, 36 ;
 aa2f0445    //rD= 17,rA=15,rB= 0,ppp = 100,ww = 01,opcode = 000101,MOV
-86200025  // VSD r17, 37 ;
 aa5f28c7    //rD= 18,rA=31,rB= 5,ppp = 000,ww = 11,opcode = 000111,SUB
-86400026  // VSD r18, 38 ;
 aa6c3888    //rD= 19,rA=12,rB= 7,ppp = 000,ww = 10,opcode = 001000,MulEU
-86600027  // VSD r19, 39 ;
 aa92180e    //rD= 20,rA=18,rB= 3,ppp = 000,ww = 00,opcode = 001110,DIV
-86800028  // VSD r20, 40 ;
 aaa50090    //rD= 21,rA= 5,rB= 0,ppp = 000,ww = 10,opcode = 010000,Squre
-86A00029  // VSD r21, 41 ;
 aac400d2    //rD= 22,rA= 4,rB= 0,ppp = 000,ww = 11,opcode = 010010,Squre root
-86C0002A  // VSD r22, 42 ;
 aae218c2    //rD= 23,rA= 2,rB= 3,ppp = 000,ww = 11,opcode = 000010,or
-86E0002B  // VSD r23, 43 ;
 ab0530c3    //rD= 24,rA= 5,rB= 6,ppp = 000,ww = 11,opcode = 000011,xor
-8700002C  // VSD r24, 44 ;
 ab2e00c4    //rD= 25,rA=14,rB= 0,ppp = 000,ww = 11,opcode = 000100,not
-8720002D  // VSD r25, 45 ;
 ab4a00c5    //rD= 26,rA=10,rB= 0,ppp = 000,ww = 11,opcode = 000101,move
-8740002E  // VSD r26, 46 ;
 ab6110c6    //rD= 27,rA= 1,rB= 2,ppp = 000,ww = 11,opcode = 000110,add
-8760002F  // VSD r27, 47 ;
 ab8518c7    //rD= 28,rA= 5,rB= 3,ppp = 000,ww = 11,opcode = 000111,subtract
-87800030  // VSD r28, 48 ;
 aba31008    //rD= 29,rA= 3,rB= 2,ppp = 000,ww = 00,opcode = 001000,mult even
-87A00031  // VSD r29, 49 ;
 abc31049    //rD= 30,rA= 3,rB= 2,ppp = 000,ww = 01,opcode = 001001,mult odd
+85E00023  // VSD r15,35 ;
+86000024  // VSD r16, 36 ;
+86200025  // VSD r17, 37 ;
+86400026  // VSD r18, 38 ;
+86600027  // VSD r19, 39 ;
+86800028  // VSD r20, 40 ;
+86A00029  // VSD r21, 41 ;
+86C0002A  // VSD r22, 42 ;
+86E0002B  // VSD r23, 43 ;
+8700002C  // VSD r24, 44 ;
+8720002D  // VSD r25, 45 ;
+8740002E  // VSD r26, 46 ;
+8760002F  // VSD r27, 47 ;
+87800030  // VSD r28, 48 ;
+87A00031  // VSD r29, 49 ;
 87C00032  // VSD r30, 50 ;
-a9ee080a    //rD= 15,rA=14,rB= 1,ppp = 000,ww = 00,opcode = 001010,shift left log
-85E00033  // VSD r15,51 ;
-aa0e084b    //rD= 16,rA=14,rB= 1,ppp = 000,ww = 01,opcode = 001011,shift right log
-86000034  // VSD r16, 52 ;
-aa21204c    //rD= 17,rA= 1,rB= 4,ppp = 000,ww = 01,opcode = 001100,shift right arith
-86200035  // VSD r17, 53 ;
-aa56008d    //rD= 18,rA=22,rB= 0,ppp = 000,ww = 10,opcode = 001101,rotate half
-86400035  // VSD r18, 54 ;
-aa69180e    //rD= 19,rA= 9,rB= 3,ppp = 000,ww = 00,opcode = 001110,div 
-86600036  // VSD r19, 55 ;
-aa89200f    //rD= 20,rA= 9,rB= 4,ppp = 000,ww = 00,opcode = 001111,mod
-86800037  // VSD r20, 56 ;
-aaa40050    //rD= 21,rA= 4,rB= 0,ppp = 000,ww = 01,opcode = 010000,square even
-86A00038  // VSD r21, 57 ;
-aac60051    //rD= 22,rA= 6,rB= 0,ppp = 000,ww = 01,opcode = 010001,square odd
-86C00039  // VSD r22, 58 ;
-aaee0052    //rD= 23,rA=14,rB= 0,ppp = 000,ww = 01,opcode = 010010,square root
-86E0003A  // VSD r23, 59 ;
-ab031006    //rD= 24,rA= 3,rB= 2,ppp = 000,ww = 00,opcode = 000110,add,size8
-8700003B  // VSD r24, 60 ;
-ab231046    //rD= 25,rA= 3,rB= 2,ppp = 000,ww = 01,opcode = 000110,size 16
-8720003C  // VSD r25, 61 ;
-ab431086    //rD= 26,rA= 3,rB= 2,ppp = 000,ww = 10,opcode = 000110,size 32
-8740003D  // VSD r26, 62 ;
-ab6310c6    //rD= 27,rA= 3,rB= 2,ppp = 000,ww = 11,opcode = 000110 size 64
-8760003E  // VSD r27, 63 ;
-ab8311c6    //rD= 28,rA= 3,rB= 2,ppp = 001,ww = 11,opcode = 000110 size 64 PPP 001
-8780003F  // VSD r28, 64 ;
-aba312c6    //rD= 29,rA= 3,rB= 2,ppp = 010,ww = 11,opcode = 000110 size 64 PPP 010
-87A00040  // VSD r29, 65 ;
-abc313c6    //rD= 30,rA= 3,rB= 2,ppp = 011,ww = 11,opcode = 000110 size 64 PPP 011
-87C00041  // VSD r30, 50 ;
-
+abe908c7    //rD= 31,rA= 9,rB= 1,ppp = 000,ww = 11,opcode = 000111
+F0000000  // VNOP ;
+F0000000  // VNOP ;
+87E0001F  // VSD r31, 31 ;
+8FE00100  // BNEZ if rD=31 !=0,then go back to address 65,
 
 F0000000  // VNOP ;
 F0000000  // VNOP ;
 F0000000  // VNOP ;
 F0000000  // VNOP ;
 00000000  // NOP End Program
+
+8FE00100  // BNEZ if rD=31 !=0,then go back to address 65,
