@@ -104,6 +104,7 @@ module EXMEM (
     //memory load wrapper/stall
     always @(*) begin
          EXMEM_stall = 0;
+         next_counter = counter;
         if(EXMEM_memEn&&EXMEM_wrEn&& (!EXMEM_memwrEn)) begin //load
             EXMEM_rD_data_select = 1;
             if(!counter) begin

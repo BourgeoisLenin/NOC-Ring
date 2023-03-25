@@ -58,6 +58,7 @@ module cmp
     assign IF_ID_stall = EXMEM_stall;
     assign ID_EXMEM_stall = EXMEM_stall;
 
+    assign EXMEM_mem_data_out = d_in;
     assign d_out = EXMEM_mem_data_in;
     assign addr_out = EXMEM_imm_addr;
     assign memEn = EXMEM_memEn;
