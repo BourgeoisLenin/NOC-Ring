@@ -56,13 +56,13 @@ module cmp
     wire [0:63] WB_ALU_out,WB_mem_data_out;
     
 
+    
+    assign d_out = EXMEM_mem_data_in;
+    assign addr_out = EXMEM_imm_addr;
+    assign memEn = EXMEM_memEn;
+    assign memWrEn = EXMEM_memwrEn;
     assign IF_ID_stall = EXMEM_stall;
     assign ID_EXMEM_stall = EXMEM_stall;
-
-    assign d_out = EXMEM_mem_data_in;
-    assign addr_out = EXMEM_imm_addr;
-    assign memEn = EXMEM_memEn;
-    assign memWrEn = EXMEM_memwrEn;
 
     IF IF_stage(
         clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out
