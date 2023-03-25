@@ -65,7 +65,7 @@ module cmp
     assign memWrEn = EXMEM_memwrEn;
 
     IF IF_stage(
-        clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out
+        clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out,EXMEM_stall
     );
 
     IF_ID IF_ID_reg(

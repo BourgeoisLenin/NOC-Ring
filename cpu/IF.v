@@ -1,8 +1,8 @@
 module IF (
-    clk,reset,inst_in,ID_br_pc,br_ctrl,pc_out
+    clk,reset,inst_in,ID_br_pc,br_ctrl,pc_out,stall
 );
 
-    input wire clk, reset, br_ctrl;
+    input wire clk, reset, br_ctrl,stall;
     input wire [0:31] inst_in;
     input wire [0:31] ID_br_pc;
     output wire [0:31] pc_out;
@@ -17,7 +17,7 @@ module IF (
         if(reset) begin
             pc <= 0;
         end
-        else begin
+        else if(!stall) begin
             pc <= next_pc;
         end
     end
