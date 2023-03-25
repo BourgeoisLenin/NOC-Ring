@@ -10,6 +10,7 @@ module cmp
     output wire [0:31] addr_out;
     output wire memWrEn, memEn;
 
+
     // IF_ID
     wire IFID_flush;
     wire [0:31] IF_pc_out;
@@ -57,6 +58,11 @@ module cmp
 
     assign IF_ID_stall = EXMEM_stall;
     assign ID_EXMEM_stall = EXMEM_stall;
+
+    assign d_out = EXMEM_mem_data_in;
+    assign addr_out = EXMEM_imm_addr;
+    assign memEn = EXMEM_memEn;
+    assign memWrEn = EXMEM_memwrEn;
 
     IF IF_stage(
         clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out
