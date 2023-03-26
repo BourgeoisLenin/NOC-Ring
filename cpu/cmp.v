@@ -56,7 +56,7 @@ module cmp
     wire [0:63] WB_ALU_out,WB_mem_data_out;
     
 
-    assign IF_ID_stall = EXMEM_stall;
+    assign IF_ID_stall = EXMEM_stall|br_hazard_stall;
     assign ID_EXMEM_stall = EXMEM_stall;
 
     assign EXMEM_mem_data_out = d_in;
@@ -66,11 +66,11 @@ module cmp
     assign memWrEn = EXMEM_memwrEn;
 
     IF IF_stage(
-        clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out,EXMEM_stall|br_hazard_stall
+        clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out,IF_ID_stall//EXMEM_stall
     );
 
     IF_ID IF_ID_reg(
-        clk,reset,ID_br_ctrl,inst_in,IF_pc_out,ID_inst,ID_pc,IF_ID_stall|br_hazard_stall
+        clk,reset,ID_br_ctrl,inst_in,IF_pc_out,ID_inst,ID_pc,IF_ID_stall
     );
 
     ID ID_stage(
