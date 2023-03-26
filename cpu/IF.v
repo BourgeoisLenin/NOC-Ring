@@ -24,7 +24,7 @@ module IF (
 
     always @(*) begin
         if(br_ctrl) begin
-            next_pc ={16'b0, ID_br_pc};
+            next_pc = {16'b0,ID_br_pc};
         end
         else begin
             next_pc = pc_plus_four;

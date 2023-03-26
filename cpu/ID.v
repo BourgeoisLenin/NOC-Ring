@@ -11,7 +11,8 @@ module ID (
     ID_wrEn,ID_memEn,ID_memwrEn,
     ID_br_ctrl,
     ID_forward_rA,ID_forward_rB,
-    ID_imm_addr,ID_op_code
+    ID_imm_addr,ID_op_code,
+    br_hazard_stall
 );
     input wire clk,reset;
     input wire [0:31] ID_inst;
@@ -31,6 +32,7 @@ module ID (
     output wire ID_forward_rA, ID_forward_rB;
     output wire [0:15] ID_imm_addr; // this goes to IF
     output wire [0:5] ID_op_code;
+    output wire br_hazard_stall;
 
     wire ID_decode_ctrl_bez,ID_decode_ctrl_bnez;
     wire rD_as_source;
@@ -43,7 +45,7 @@ module ID (
     ID_memEn,ID_memwrEn,ID_decode_ctrl_bez,ID_decode_ctrl_bnez,rD_as_source,ID_imm_addr,ID_op_code);
 
     //connect M_type_rD_data to ID_rB_data - done
-    br_ctrl br_ctrl(ID_decode_ctrl_bez,ID_decode_ctrl_bnez, ID_rB_data,ID_br_ctrl);
+    br_ctrl br_ctrl(ID_decode_ctrl_bez,ID_decode_ctrl_bnez, ID_rB_data,ID_br_ctrl,ID_forward_rB,br_hazard_stall);
 
     RF reg_file(clk,reset,WB_wrEn,ID_rA,rB_or_rD,WB_rD,WB_ppp,WB_rD_data,ID_rA_data,ID_rB_data);
 

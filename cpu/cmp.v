@@ -28,6 +28,7 @@ module cmp
     wire [0:2] ID_ppp;
     wire ID_wrEn,ID_memEn,ID_memwrEn, ID_forward_rA,ID_forward_rB;
     wire [0:5] ID_op_code;
+    wire br_hazard_stall;
 
     //ID EXMEM
     wire ID_EXMEM_stall;
@@ -65,11 +66,11 @@ module cmp
     assign memWrEn = EXMEM_memwrEn;
 
     IF IF_stage(
-        clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out,EXMEM_stall
+        clk,reset,inst_in,ID_imm_addr,ID_br_ctrl,IF_pc_out,EXMEM_stall|br_hazard_stall
     );
 
     IF_ID IF_ID_reg(
-        clk,reset,ID_br_ctrl,inst_in,IF_pc_out,ID_inst,ID_pc,IF_ID_stall
+        clk,reset,ID_br_ctrl,inst_in,IF_pc_out,ID_inst,ID_pc,IF_ID_stall|br_hazard_stall
     );
 
     ID ID_stage(
@@ -85,7 +86,8 @@ module cmp
         ID_wrEn,ID_memEn,ID_memwrEn,
         ID_br_ctrl,
         ID_forward_rA,ID_forward_rB,
-        ID_imm_addr,ID_op_code
+        ID_imm_addr,ID_op_code,
+        br_hazard_stall
     );
 
     ID_EXMEM ID_EXMEM_reg(
