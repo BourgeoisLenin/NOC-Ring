@@ -74,7 +74,7 @@ module cardinal_processors(
 
 
 
-    cmp_new node0cpu(
+    cardinal_processor node0cpu(
         clk,
         reset,
         node0_inst_in,
@@ -90,7 +90,7 @@ module cardinal_processors(
         node0_nicEn,
         node0_nicWrEn
     );
-    cmp_new node1cpu(
+    cardinal_processor node1cpu(
         clk,
         reset,
         node1_inst_in,
@@ -107,7 +107,7 @@ module cardinal_processors(
         node1_nicWrEn
     );
 
-    cmp_new node2cpu(
+    cardinal_processor node2cpu(
         clk,
         reset,
         node2_inst_in,
@@ -123,7 +123,7 @@ module cardinal_processors(
         node2_nicEn,
         node2_nicWrEn
     );
-    cmp_new node3cpu(
+    cardinal_processor node3cpu(
         clk,
         reset,
         node3_inst_in,
